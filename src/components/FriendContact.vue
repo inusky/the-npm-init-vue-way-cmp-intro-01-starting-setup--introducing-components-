@@ -6,13 +6,8 @@ const props = defineProps<{
   name: string
   phone: string
   email: string
-  // COMPLEX APPLICATION:
-  // isFavorite?: string
   isFavorite: boolean
 }>()
-
-// COMPLEX APPLICATION:
-// const friendIsFavorite = ref(props.isFavorite ?? 'false')
 
 function toggleDetails() {
   detailsAreVisible.value = !detailsAreVisible.value
@@ -27,9 +22,7 @@ function toggleFavorite() {
   }
 } */
 
-const emit = defineEmits<{
-  (e: 'msg-toggle-favorite', payload: string): void
-}>()
+const emit = defineEmits(['msg-toggle-favorite', 'delete-contact'])
 
 function toggleFavorite() {
   emit('msg-toggle-favorite', props.id)
@@ -38,6 +31,7 @@ function toggleFavorite() {
 
 <template>
   <li>
+    <!-- Details coming from props -->
     <h2>{{ props.name }} {{ props.isFavorite ? '(Favorite)' : '' }}</h2>
     <button @click="toggleFavorite">Toggle Favorite</button>
     <button @click="toggleDetails">{{ detailsAreVisible ? 'Hide' : 'Show' }} Details</button>
@@ -45,6 +39,7 @@ function toggleFavorite() {
       <li><strong>Phone:</strong> {{ props.phone }}</li>
       <li><strong>Email:</strong> {{ props.email }}</li>
     </ul>
+    <button @click="emit('delete-contact', props.id)">Delete Contact</button>
   </li>
 </template>
 

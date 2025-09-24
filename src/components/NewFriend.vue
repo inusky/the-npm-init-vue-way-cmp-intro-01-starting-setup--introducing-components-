@@ -4,25 +4,24 @@ const emit = defineEmits<{
   (
     e: 'addFriend',
     payload: {
-      id: string
-      name: string
-      phone: string
-      email: string
-      isFavorite: boolean
+      id: string;
+      name: string;
+      phone: string;
+      email: string;
+      isFavorite: boolean;
     },
   ): void
 }>()
-const userId = ref('')
 const username = ref('')
 const userPhone = ref('')
 const userEmail = ref('')
 const userFavorite = ref(false)
 
 function sendSignal() {
-  if (!userId.value || !userPhone.value || !userEmail.value) return
+  if (!userPhone.value || !userEmail.value) return
 
   emit('addFriend', {
-    id: userId.value,
+    id: new Date().toString(),
     name: username.value,
     phone: userPhone.value,
     email: userEmail.value,
@@ -33,10 +32,6 @@ function sendSignal() {
 
 <template>
   <form @submit.prevent="sendSignal">
-    <label for="id">Id: </label>
-    <input type="text" id="id" placeholder="Your firstname in lowercase" v-model="userId" />
-    <br />
-    <br />
     <label for="name">Name: </label>
     <input type="text" id="name" placeholder="Your fullname, optional" v-model="username" />
     <br />

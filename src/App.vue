@@ -2,7 +2,14 @@
 import { ref } from 'vue'
 import FriendContact from './components/FriendContact.vue'
 import NewFriend from './components/NewFriend.vue'
-const friends = ref([
+
+const friends = ref<{
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  isFavorite: boolean;
+}[]>([
   {
     id: 'manuel',
     name: 'Manuel Lorenz',
@@ -15,59 +22,9 @@ const friends = ref([
     name: 'Julie Jones',
     phone: '0987 654421 21',
     email: 'julie@localhost.com',
+    isFavorite: false,
   },
 ])
-
-// COMPLEX APPLICATION:
-// const userId = ref('')
-// const username = ref('')
-// const userPhone = ref('')
-// const userEmail = ref('')
-// const userFavorite = ref('')
-// const userRemove = ref('')
-// interface Friend {
-//   id: string
-//   name: string
-//   email: string
-//   phone: string
-//   isFavorite?: string
-// }
-
-// const friends = ref<Friend[]>([])
-
-// function addFriend() {
-//   if (!userId.value || !userPhone.value || !userEmail.value) return
-//   else {
-//     friends.value.push({
-//       id: userId.value,
-//       name: username.value,
-//       phone: userPhone.value,
-//       email: userEmail.value,
-//       isFavorite: userFavorite.value || 'false',
-//     })
-//   }
-
-//   userId.value = ''
-//   username.value = ''
-//   userPhone.value = ''
-//   userEmail.value = ''
-//   userFavorite.value = ''
-//   userRemove.value = ''
-// }
-
-// function removeFriend() {
-//   if (Number(userRemove.value) > friends.value.length) return
-//   else if (Number(userRemove.value) <= friends.value.length && Number(userRemove.value) > 0) {
-//     friends.value.splice(Number(userRemove.value) - 1, 1)
-//   } else return
-
-//   userId.value = ''
-//   username.value = ''
-//   userPhone.value = ''
-//   userEmail.value = ''
-//   userFavorite.value = ''
-//   userRemove.value = ''
-// }
 
 function listenToggle(id: string) {
   const friend = friends.value.find((f) => f.id === id)
@@ -84,6 +41,11 @@ function add_friend(friend: {
   isFavorite: boolean
 }) {
   friends.value.push(friend)
+}
+
+function deleteContact(id: string) {
+  const indexOfFriendsToRemove = friends.value.findIndex((i) => i.id === id)
+  friends.value.splice(indexOfFriendsToRemove, 1)
 }
 </script>
 
@@ -103,54 +65,9 @@ function add_friend(friend: {
         :email="friend.email"
         :is-favorite="friend.isFavorite || false"
         @msg-toggle-favorite="listenToggle"
+        @delete-contact="deleteContact"
       />
-      <!-- COMPLEX APPLICATION: -->
-      <!-- <FriendContact
-        v-for="friend in friends"
-        :key="friend.id"
-        :id="friend.id"
-        :name="friend.name"
-        :phone="friend.phone"
-        :email="friend.email"
-        :is-favorite="friend.isFavorite"
-      /> -->
     </ul>
-    <!-- COMPLEX APPLICATION: -->
-    <!-- <br />
-    <br />
-    <label for="id">Id: </label>
-    <input type="text" id="id" placeholder="Your first name in lowercase" v-model="userId" />
-    <br />
-    <br />
-    <label for="name">Name: </label>
-    <input type="text" id="name" placeholder="Your full name, OPTIONAL" v-model="username" />
-    <br />
-    <br />
-    <label for="phone">Phone: </label>
-    <input type="text" id="phone" placeholder="Your mobile number" v-model="userPhone" />
-    <br />
-    <br />
-    <label for="email">Email: </label>
-    <input type="text" id="email" placeholder="Your email address" v-model="userEmail" />
-    <br />
-    <br />
-    <label for="favorite">Is your favorite: </label>
-    <input type="text" id="favorite" placeholder="true/false, OPTIONAL" v-model="userFavorite" />
-    <br />
-    <br />
-    <button @click="addFriend">Add friend</button>
-    <br />
-    <br />
-    <label for="removeIndex">Remove friend: </label>
-    <input
-      v-model="userRemove"
-      type="number"
-      id="removeIndex"
-      placeholder="1 - Number of friends"
-    />
-    <br />
-    <br />
-    <button :disabled="friends.length === 0" @click="removeFriend">Remove friend</button> -->
   </section>
 </template>
 
