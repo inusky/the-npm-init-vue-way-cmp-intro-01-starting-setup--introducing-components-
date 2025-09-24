@@ -32,27 +32,29 @@ function sendSignal() {
 </script>
 
 <template>
-  <label for="id">Id: </label>
-  <input type="text" id="id" placeholder="Your firstname in lowercase" v-model="userId" />
-  <br />
-  <br />
-  <label for="name">Name: </label>
-  <input type="text" id="name" placeholder="Your fullname, optional" v-model="username" />
-  <br />
-  <br />
-  <label for="phone">Phone: </label>
-  <input type="tel" id="phone" placeholder="Your phone" v-model="userPhone" />
-  <br />
-  <br />
-  <label for="email">Email: </label>
-  <input type="email" id="email" placeholder="Your email" v-model="userEmail" />
-  <br />
-  <br />
-  <label for="is-favorite">Is favorite: </label>
-  <input type="checkbox" id="is-favorite" v-model="userFavorite" />
-  <br />
-  <br />
-  <button type="submit" @click="sendSignal">Submit here</button>
+  <form @submit.prevent="sendSignal">
+    <label for="id">Id: </label>
+    <input type="text" id="id" placeholder="Your firstname in lowercase" v-model="userId" />
+    <br />
+    <br />
+    <label for="name">Name: </label>
+    <input type="text" id="name" placeholder="Your fullname, optional" v-model="username" />
+    <br />
+    <br />
+    <label for="phone">Phone: </label>
+    <input type="tel" id="phone" placeholder="Your phone" v-model="userPhone" />
+    <br />
+    <br />
+    <label for="email">Email: </label>
+    <input type="email" id="email" placeholder="Your email" v-model="userEmail" />
+    <br />
+    <br />
+    <label for="is-favorite">Is favorite: </label>
+    <input type="checkbox" id="is-favorite" v-model="userFavorite" />
+    <br />
+    <br />
+    <button type="submit">Submit here</button>
+  </form>
 </template>
 
 <style scoped>
